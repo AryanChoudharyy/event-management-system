@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6366f1" />
+      <stop offset="100%" stop-color="#a855f7" />
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="100%" stop-color="#818cf8" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#6366f1" flood-opacity="0.35" />
+    </filter>
+  </defs>
+
+  <!-- Background Card -->
+  <rect x="32" y="32" width="448" height="448" rx="100" fill="url(#bgGrad)" filter="url(#shadow)" />
+
+  <!-- Calendar Base Header -->
+  <rect x="96" y="112" width="320" height="288" rx="36" fill="#ffffff" opacity="0.95" />
+  <path d="M96 148 C96 128 112 112 132 112 L380 112 C400 112 416 128 416 148 L416 192 L96 192 Z" fill="url(#accentGrad)" />
+
+  <!-- Calendar Rings / Binders -->
+  <rect x="160" y="80" width="32" height="64" rx="16" fill="#ffffff" />
+  <rect x="320" y="80" width="32" height="64" rx="16" fill="#ffffff" />
+
+  <!-- Event Flow Checkmark / Dynamic Spark Pin -->
+  <circle cx="192" cy="260" r="22" fill="#6366f1" opacity="0.25" />
+  <circle cx="192" cy="260" r="14" fill="#6366f1" />
+
+  <circle cx="256" cy="260" r="22" fill="#a855f7" opacity="0.25" />
+  <circle cx="256" cy="260" r="14" fill="#a855f7" />
+
+  <circle cx="320" cy="260" r="22" fill="#38bdf8" opacity="0.25" />
+  <circle cx="320" cy="260" r="14" fill="#38bdf8" />
+
+  <circle cx="192" cy="330" r="14" fill="#a855f7" />
+  <path d="M240 330 L320 330" stroke="#6366f1" stroke-width="14" stroke-linecap="round" />
+</svg>
