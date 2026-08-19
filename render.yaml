@@ -21,7 +21,6 @@ services:
   - type: web
     name: event-management-frontend
     env: static
-    region: oregon
     buildCommand: cd client && npm install && npm run build
     staticPublishPath: ./client/dist
     envVars:
