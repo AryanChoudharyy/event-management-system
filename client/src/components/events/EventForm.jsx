@@ -63,7 +63,9 @@ export default function EventForm({ event, onClose }) {
     return {
       title: event.title,
       description: event.description || '',
-      profiles: event.profiles.map((p) => (typeof p === 'object' ? p._id : p)),
+      profiles: event.profiles
+        .map((p) => (typeof p === 'object' ? p._id : p))
+        .filter((id) => id !== activeProfileId),
       timezone: tz,
       startDate: start.date,
       startTime: start.time,
@@ -76,10 +78,12 @@ export default function EventForm({ event, onClose }) {
   const [errors, setErrors] = useState({});
   const [submitting, setSubmitting] = useState(false);
 
-  const profileOptions = assignableProfiles.map((p) => ({
-    value: p._id,
-    label: p.name,
-  }));
+  const profileOptions = assignableProfiles
+    .filter((p) => p._id !== activeProfileId)
+    .map((p) => ({
+      value: p._id,
+      label: p.name,
+    }));
 
   const updateField = (field, value) => {
     setForm((prev) => ({ ...prev, [field]: value }));
@@ -142,10 +146,15 @@ export default function EventForm({ event, onClose }) {
       const startUTC = localToUTC(form.startDate, form.startTime, form.timezone);
       const endUTC = localToUTC(form.endDate, form.endTime, form.timezone);
 
+      // Always include the current user's profile (creator is implicitly assigned)
+      const allProfiles = activeProfileId
+        ? [activeProfileId, ...form.profiles.filter((id) => id !== activeProfileId)]
+        : form.profiles;
+
       const payload = {
         title: form.title.trim(),
         description: form.description.trim(),
-        profiles: form.profiles,
+        profiles: allProfiles,
         timezone: form.timezone,
         startDateTime: startUTC,
         endDateTime: endUTC,
