@@ -15,9 +15,15 @@ const useProfileStore = create((set, get) => ({
   },
 
   loadIdentities: async () => {
-    const res = await api.fetchIdentities();
-    set({ identities: res.data });
-    return res.data;
+    try {
+      const res = await api.fetchIdentities();
+      set({ identities: res.data || [] });
+      return res.data;
+    } catch (err) {
+      console.error('Failed to load identities:', err);
+      set({ identities: [] });
+      return [];
+    }
   },
 
   selectProfile: async (id) => {

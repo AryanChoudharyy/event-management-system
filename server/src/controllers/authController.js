@@ -56,6 +56,11 @@ export const getCurrentIdentity = asyncHandler(async (req, res) => {
 });
 
 export const logout = asyncHandler(async (_req, res) => {
-  res.clearCookie(sessionCookieName);
+  const isProd = process.env.NODE_ENV === 'production';
+  res.clearCookie(sessionCookieName, {
+    httpOnly: true,
+    sameSite: isProd ? 'none' : 'lax',
+    secure: isProd,
+  });
   res.json({ success: true, message: 'Logged out' });
 });

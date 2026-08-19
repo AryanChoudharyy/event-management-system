@@ -32,10 +32,11 @@ export const getCookie = (req, name) => {
 };
 
 export const setSessionCookie = (res, token) => {
+  const isProd = process.env.NODE_ENV === 'production';
   res.cookie(SESSION_COOKIE, token, {
     httpOnly: true,
-    sameSite: 'lax',
-    secure: process.env.NODE_ENV === 'production',
+    sameSite: isProd ? 'none' : 'lax',
+    secure: isProd,
     maxAge: 1000 * 60 * 60 * 24 * 7,
   });
 };
