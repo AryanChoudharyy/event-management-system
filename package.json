@@ -1,0 +1,14 @@
+{
+  "name": "event-management-system",
+  "private": true,
+  "scripts": {
+    "dev:server": "cd server && npm run dev",
+    "dev:client": "cd client && npm run dev",
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
+    "install:all": "npm install && cd server && npm install && cd ../client && npm install",
+    "seed": "cd server && npm run seed"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

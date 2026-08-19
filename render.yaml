@@ -1,0 +1,29 @@
+services:
+  # Backend API
+  - type: web
+    name: event-management-api
+    env: node
+    region: oregon
+    buildCommand: cd server && npm install
+    startCommand: cd server && node src/server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
+      - key: MONGODB_URI
+        sync: false
+      - key: CLIENT_URL
+        sync: false
+    healthCheckPath: /api/health
+
+  # Frontend
+  - type: web
+    name: event-management-frontend
+    env: static
+    region: oregon
+    buildCommand: cd client && npm install && npm run build
+    staticPublishPath: ./client/dist
+    envVars:
+      - key: VITE_API_BASE_URL
+        sync: false
