@@ -21,29 +21,24 @@ export default function App() {
 
   // Initialize: check if user is logged in
   useEffect(() => {
+    let isMounted = true;
     const initialize = async () => {
       try {
-        await loadCurrentUser();
+        const user = await loadCurrentUser();
+        if (user && isMounted) {
+          Promise.all([loadIdentities(), loadProfiles(), loadEvents()]).catch(() => {});
+        }
       } catch {
-        // If not logged in, fetch the available profiles so they can choose
-        await loadIdentities();
+        if (isMounted) {
+          await loadIdentities().catch(() => {});
+        }
       } finally {
-        setInitializing(false);
+        if (isMounted) setInitializing(false);
       }
     };
     initialize();
-  }, [loadCurrentUser, loadIdentities]);
-
-  // Load other data depending on login status
-  useEffect(() => {
-    if (currentUser) {
-      loadIdentities();
-      loadProfiles();
-      loadEvents();
-    } else {
-      loadIdentities();
-    }
-  }, [currentUser, loadIdentities, loadProfiles, loadEvents]);
+    return () => { isMounted = false; };
+  }, [loadCurrentUser, loadIdentities, loadProfiles, loadEvents]);
 
   const handleSelectProfile = async (id) => {
     try {
